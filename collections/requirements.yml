@@ -16,6 +16,4 @@ collections:
   - name: https://github.com/shadowman-lab/shadowman.reports.git
     type: git
 
-  - name: redhat.rhv
-
   - name: community.postgresql
