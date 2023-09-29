@@ -13,7 +13,8 @@ collections:
 
   - name: splunk.es
 
-  - name: shadowman.reports
+  - name: https://github.com/shadowman-lab/shadowman.reports.git
+    type: git
 
   - name: redhat.rhv
 
