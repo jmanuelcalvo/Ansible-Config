@@ -12,5 +12,5 @@
       ansible.builtin.include_role:
         name: shadowman.reports.build_report_windows
         apply:
-          delegate_to: 192.168.64.3
+          delegate_to: report-server
           run_once: true
