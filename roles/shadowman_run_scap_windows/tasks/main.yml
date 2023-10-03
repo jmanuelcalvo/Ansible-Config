@@ -42,11 +42,11 @@
     owner: root
     group: root
     mode: '0644'
-  delegate_to: report.shadowman.dev
+  delegate_to: report-server.jmanuelcalvo.com
 
 - name: DISPLAY LINK TO SCAP REPORT
   ansible.builtin.debug:
-    msg: "http://report.shadowman.dev/openscap/{{ inventory_hostname }}"
+    msg: "http://report-server.jmanuelcalvo.com/openscap/{{ inventory_hostname }}"
 
 - name: Get results
   ansible.builtin.slurp:
@@ -94,7 +94,7 @@
     mode: '0755'
     owner: root
     group: root
-  delegate_to: report.shadowman.dev
+  delegate_to: report-server.jmanuelcalvo.com
   run_once: true
 
 - name: Template Summary Report
@@ -104,12 +104,12 @@
     owner: root
     group: root
     mode: '0644'
-  delegate_to: report.shadowman.dev
+  delegate_to: report-server.jmanuelcalvo.com
   run_once: true
 
 - name: DISPLAY LINK TO SUMMARY REPORT
   ansible.builtin.debug:
-    msg: "http://report.shadowman.dev/openscap/windowssummary/"
+    msg: "http://report-server.jmanuelcalvo.com/openscap/windowssummary/"
   run_once: true
 
 - name: Template Summary Report for e-mail
