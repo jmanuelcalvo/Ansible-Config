@@ -13,6 +13,4 @@
         name: shadowman.reports.build_report_windows
         apply:
           delegate_to: report-server
-          become: yes
-          become_user: ansible
           run_once: true
