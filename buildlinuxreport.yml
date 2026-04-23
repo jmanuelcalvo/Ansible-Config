@@ -1,6 +1,9 @@
 ---
 - name: Create Linux Report
   hosts: all
+
+    collections:
+    - shadowman.reports
   tasks:
 
     - name: Scan Systems for detailed report
