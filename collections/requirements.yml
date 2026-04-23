@@ -1,19 +1,12 @@
 collections:
 #  - name: redhat.insights
-
   - name: chocolatey.chocolatey
-
   - name: community.windows
-
   - name: community.general
-
   - name: ansible.windows
-
   - name: ansible.posix
-
   - name: splunk.es
-
-  - name: https://github.com/shadowman-lab/shadowman.reports.git
+  - name: shadowman.reports
+    source: https://github.com/shadowman-lab/shadowman.reports.git
     type: git
-
   - name: community.postgresql
