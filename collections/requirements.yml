@@ -9,4 +9,5 @@ collections:
   - name: shadowman.reports
     source: https://github.com/shadowman-lab/shadowman.reports.git
     type: git
+    version: main
   - name: community.postgresql
