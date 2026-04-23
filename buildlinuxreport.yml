@@ -18,6 +18,10 @@
 
     - debug:
         var: collections_out.stdout_lines
+
+    - name: Show collections path
+     debug:
+       msg: "{{ lookup('env','ANSIBLE_COLLECTIONS_PATHS') }}"   
    
 
     - name: Build the report
