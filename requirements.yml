@@ -1,0 +1,5 @@
+---
+roles:
+  - name: shadowman.reports
+    src: https://github.com/shadowman-lab/shadowman.reports.git
+    scm: git
