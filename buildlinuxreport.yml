@@ -2,7 +2,7 @@
 - name: Create Linux Report
   hosts: all
 
-    collections:
+  collections:
     - shadowman.reports
   tasks:
 
