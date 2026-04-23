@@ -1,32 +1,26 @@
 ---
 - name: Create Linux Report
   hosts: all
-
-  collections:
-    - shadowman.reports
-
   tasks:
+  
+    - name: Scan packages (Unix/Linux)
+      ansible.builtin.package_facts:
+      register: result
+      when: ansible_os_family != "Windows"
 
-    - name: Scan Systems for detailed report
-      ansible.builtin.include_role:
-        name: shadowman_scan_systems
-      when: detailedreport == 'True'
+    - name: Organize results for loopings
+      ansible.builtin.set_fact:
+        packagefacts: "{{ result.ansible_facts.packages | dict2items }}"
+        cacheable: true
+      when: ansible_os_family != "Windows"
 
-    - name: Debug collections
-      command: ansible-galaxy collection list
-      register: collections_out
-
-    - debug:
-        var: collections_out.stdout_lines
-
-    - name: Show collections path
-     debug:
-       msg: "{{ lookup('env','ANSIBLE_COLLECTIONS_PATHS') }}"   
-   
+    - name: Scan services (Unix/Linux)
+      ansible.builtin.service_facts:
+      when: ansible_os_family != "Windows"
 
     - name: Build the report
       ansible.builtin.include_role:
-        name: build_report_linux
+        name: shadowman.reports.build_report_linux
         apply:
           delegate_to: "{{ groups['report_server'][0] }}"
           run_once: true
