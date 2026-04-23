@@ -12,6 +12,14 @@
         name: shadowman_scan_systems
       when: detailedreport == 'True'
 
+    - name: Debug collections
+      command: ansible-galaxy collection list
+      register: collections_out
+
+    - debug:
+        var: collections_out.stdout_lines
+   
+
     - name: Build the report
       ansible.builtin.include_role:
         name: build_report_linux
