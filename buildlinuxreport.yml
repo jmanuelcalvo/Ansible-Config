@@ -25,6 +25,21 @@
           delegate_to: "{{ groups['report_server'][0] }}"
           run_once: true
 
+    # 🔹 Construir Job ID compatible (tower/controller)
+    - name: Define Job ID
+      ansible.builtin.set_fact:
+        job_id_final: "{{ tower_job_id | default(controller_job_id) }}"
+      delegate_to: localhost
+      run_once: true
+
+    # 🔹 Construir URL del Job
+    - name: Build AAP job URL
+      ansible.builtin.set_fact:
+        aap_job_url: "{{ aap_base_url }}/#/jobs/playbook/{{ job_id_final }}"
+      delegate_to: localhost
+      run_once: true
+
+    # 🔹 Notificación a Mattermost
     - name: Send notification to Mattermost 🚀
       ansible.builtin.uri:
         url: "{{ mattermost_webhook_url }}"
@@ -36,22 +51,22 @@
               title: "✅ Linux Report generado"
               fields:
                 - title: "📦 Job"
-                  value: "{{ tower_job_template_name }}"
+                  value: "{{ tower_job_template_name | default('N/A') }}"
                   short: true
                 - title: "🖥️ Hosts"
                   value: "{{ ansible_play_hosts | length }}"
                   short: true
-                - title: "👤 Ejecutado por"
-                  value: "{{ tower_user_name }}"
+                - title: "👤 Usuario"
+                  value: "{{ tower_user_name | default('N/A') }}"
                   short: true
                 - title: "🔢 Job ID"
-                  value: "{{ tower_job_id }}"
+                  value: "{{ job_id_final }}"
                   short: true
               text: |
                 🔗 **Ver ejecución:**
-                {{ tower_job_url }}
+                {{ aap_job_url }}
 
-                📄 **Reporte generado en:**
-                http://report-server/linux_report.html
+                📄 **Reporte generado:**
+                {{ report_url }}
       delegate_to: localhost
       run_once: true
