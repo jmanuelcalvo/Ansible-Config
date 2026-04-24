@@ -24,3 +24,34 @@
         apply:
           delegate_to: "{{ groups['report_server'][0] }}"
           run_once: true
+
+    - name: Send notification to Mattermost 🚀
+      ansible.builtin.uri:
+        url: "{{ mattermost_webhook_url }}"
+        method: POST
+        body_format: json
+        body:
+          attachments:
+            - color: "#00c853"
+              title: "✅ Linux Report generado"
+              fields:
+                - title: "📦 Job"
+                  value: "{{ tower_job_template_name }}"
+                  short: true
+                - title: "🖥️ Hosts"
+                  value: "{{ ansible_play_hosts | length }}"
+                  short: true
+                - title: "👤 Ejecutado por"
+                  value: "{{ tower_user_name }}"
+                  short: true
+                - title: "🔢 Job ID"
+                  value: "{{ tower_job_id }}"
+                  short: true
+              text: |
+                🔗 **Ver ejecución:**
+                {{ tower_job_url }}
+
+                📄 **Reporte generado en:**
+                http://report-server/linux_report.html
+      delegate_to: localhost
+      run_once: true
